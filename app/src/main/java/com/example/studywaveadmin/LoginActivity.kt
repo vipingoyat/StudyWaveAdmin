@@ -71,6 +71,12 @@ class LoginActivity : AppCompatActivity() {
         database = Firebase.database.reference
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
 
+        // Check if user is logged in
+        if (auth.currentUser != null) {
+            // User is logged in, redirect to MainActivity
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
         // Handle Google Sign-In button click
         binding.googleButton.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent

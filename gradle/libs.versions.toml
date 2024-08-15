@@ -15,6 +15,7 @@ firebaseDatabase = "21.0.0"
 firebaseAppcheckKtx = "18.0.0"
 firebaseAppcheckPlayintegrity = "18.0.0"
 playServicesAuth = "21.2.0"
+firebaseStorage = "21.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +31,7 @@ firebase-database = { group = "com.google.firebase", name = "firebase-database",
 firebase-appcheck-ktx = { group = "com.google.firebase", name = "firebase-appcheck-ktx", version.ref = "firebaseAppcheckKtx" }
 firebase-appcheck-playintegrity = { group = "com.google.firebase", name = "firebase-appcheck-playintegrity", version.ref = "firebaseAppcheckPlayintegrity" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
