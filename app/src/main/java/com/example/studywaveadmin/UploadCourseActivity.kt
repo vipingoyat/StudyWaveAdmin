@@ -44,7 +44,7 @@ class UploadCourseActivity : AppCompatActivity() {
 
         // Initialize Loading Dialog
         loadingDialog = Dialog(this)
-        loadingDialog.setContentView(R.layout.loading_dialog)
+        loadingDialog.setContentView(R.layout.uploading_dialog)
 
         if (loadingDialog.window != null) {
 
