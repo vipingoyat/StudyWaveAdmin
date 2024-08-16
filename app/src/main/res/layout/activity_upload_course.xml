@@ -54,7 +54,7 @@
                 android:layout_height="160dp"
                 app:cardCornerRadius="18dp"
                 android:elevation="16dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toStartOf="@id/card_video"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -71,15 +71,21 @@
                 android:id="@+id/card_video"
                 android:layout_width="175dp"
                 android:layout_height="160dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:elevation="16dp"
                 app:cardCornerRadius="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/card_thumbnail"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
+                <com.example.studywaveadmin.FullScreenVideoView
                     android:id="@+id/course_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+                <ImageView
+                    android:id="@+id/course_video_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -115,11 +121,11 @@
                 android:id="@+id/title_editText"
                 android:layout_width="352dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="28dp"
                 android:background="@drawable/edittextshape"
                 android:hint="Course Title"
                 android:focusable="true"
-                android:elevation="8dp"
+                android:elevation="4dp"
                 android:inputType="textPersonName"
                 android:padding="18dp"
                 android:fontFamily="sans-serif-medium"
@@ -138,7 +144,7 @@
                 android:focusable="true"
                 android:inputType="textPersonName"
                 android:padding="18dp"
-                android:elevation="8dp"
+                android:elevation="4dp"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/black"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -157,7 +163,7 @@
                 android:padding="18dp"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/black"
-                android:elevation="8dp"
+                android:elevation="4dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/description_editText"/>
@@ -174,7 +180,7 @@
                 android:padding="18dp"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/black"
-                android:elevation="8dp"
+                android:elevation="4dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/duration_editText"/>
@@ -190,7 +196,7 @@
                 android:padding="6dp"
                 android:elevation="8dp"
                 android:fontFamily="@font/jost_semibold"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="38dp"
                 android:layout_marginBottom="12dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
