@@ -49,6 +49,9 @@ dependencies {
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
 
+    //For Glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
 
 
     implementation(libs.play.services.auth)
