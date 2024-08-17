@@ -1,5 +1,6 @@
 package com.example.studywaveadmin
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -71,13 +72,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun retrieveAndDisplayCourseDetails() {
         loadingDialog.show()
-        val courseRef = database.reference.child("course")
+        val courseRef =  database.reference.child("course").orderByChild("postedBy").equalTo(auth.uid)
         courseList = arrayListOf()
-        courseRef.addListenerForSingleValueEvent(object :ValueEventListener{
+        courseRef.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(courseSnapshot in snapshot.children){
-                    val courseitem = courseSnapshot.getValue(courseData::class.java)
-                    courseitem?.let {
+                    val courseItem = courseSnapshot.getValue(courseData::class.java)
+                    courseItem?.let {
                         courseList.add(it)
                     }
                 }
@@ -94,9 +95,11 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setAdapter(courseList: java.util.ArrayList<courseData>) {
         courseAdapter = CourseAdapter(this,courseList)
         binding.recyclerView.layoutManager = GridLayoutManager(this,2)
         binding.recyclerView.adapter = courseAdapter
+        courseAdapter.notifyDataSetChanged()
     }
 }

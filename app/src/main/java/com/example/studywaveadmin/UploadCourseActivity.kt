@@ -121,6 +121,8 @@ class UploadCourseActivity : AppCompatActivity() {
     ) {
         loadingDialog.show()
         val childKey = System.currentTimeMillis().toString()
+        val databaseRef = database.reference.child("course")
+        val postId = databaseRef.push().key
 
         val imageStorageRef = storage.reference.child("thumbnails/$childKey-thumbnail")
         val videoStorageRef = storage.reference.child("videos/$childKey-video")
@@ -136,20 +138,23 @@ class UploadCourseActivity : AppCompatActivity() {
                                 title = title,
                                 description = description,
                                 duration = duration,
-                                price = price.toLong(),
+                                price = price,
                                 thumbnail = imageUrl.toString(),
                                 introVideo = videoUri.toString(),
+                                postId = postId,
                                 postedBy = it1,
                                 enable = "false"
                             )
                         }
-                        database.reference.child("course")
-                            .push()
-                            .setValue(model).addOnSuccessListener {
-                                loadingDialog.dismiss()
-                                Toast.makeText(this, "Course Uploaded", Toast.LENGTH_SHORT).show()
-                                onBackPressed()
-                            }
+                        if (postId != null) {
+                            databaseRef
+                                .child(postId)
+                                .setValue(model).addOnSuccessListener {
+                                    loadingDialog.dismiss()
+                                    Toast.makeText(this, "Course Uploaded", Toast.LENGTH_SHORT).show()
+                                    onBackPressed()
+                                }
+                        }
                     }.addOnFailureListener {
                         loadingDialog.dismiss()
                         Toast.makeText(this, "Failed to get video URL", Toast.LENGTH_SHORT).show()
