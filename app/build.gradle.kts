@@ -41,6 +41,8 @@ android {
 
 dependencies {
 
+    implementation("androidx.core:core:1.13.1")
+
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
 
