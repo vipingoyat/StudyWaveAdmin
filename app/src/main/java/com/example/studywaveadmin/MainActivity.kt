@@ -12,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.studywave.model.UserData
 import com.example.studywaveadmin.Adapter.CourseAdapter
 import com.example.studywaveadmin.databinding.ActivityMainBinding
@@ -35,7 +33,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var storage: FirebaseStorage
     private lateinit var loadingDialog: Dialog
     private lateinit var courseList:ArrayList<courseData>
-    private lateinit var userDetail:ArrayList<UserData>
     private lateinit var courseAdapter:CourseAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,12 +67,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun retrieveAndDisplayCourseDetails() {
+    private fun retrieveAndDisplayCourseDetails(){
         loadingDialog.show()
         val courseRef =  database.reference.child("course").orderByChild("postedBy").equalTo(auth.uid)
         courseList = arrayListOf()
         courseRef.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                courseList.clear()
                 for(courseSnapshot in snapshot.children){
                     val courseItem = courseSnapshot.getValue(courseData::class.java)
                     courseItem?.let {
@@ -85,13 +83,10 @@ class MainActivity : AppCompatActivity() {
                 setAdapter(courseList)
                 loadingDialog.dismiss()
             }
-
-
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(this@MainActivity,error.message,Toast.LENGTH_SHORT).show()
                 loadingDialog.dismiss()
             }
-
         })
     }
 

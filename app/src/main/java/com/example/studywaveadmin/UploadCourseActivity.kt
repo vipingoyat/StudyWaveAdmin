@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import android.widget.VideoView
 import androidx.activity.enableEdgeToEdge
@@ -32,6 +33,7 @@ class UploadCourseActivity : AppCompatActivity() {
     private var imageUri: Uri? = null
     private var introVideoUri: Uri? = null
     private lateinit var loadingDialog: Dialog
+    private lateinit var category:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,10 +60,24 @@ class UploadCourseActivity : AppCompatActivity() {
             insets
         }
 
+        val courseList = arrayOf("General", "Health", "Business", "Arts & Humanities", "Computer Science", "Gaming", "Science")
+        val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,courseList)
+        val autoCompleteTextView = binding.listOfCategory
+        autoCompleteTextView.setAdapter(adapter)
+
+        autoCompleteTextView.setOnItemClickListener { parent, view, position, id ->
+            // Retrieve the selected item
+            val selectedText = parent.getItemAtPosition(position).toString()
+            // Do something with the selected text
+            category = selectedText
+        }
+
+        //Picking the Image
         binding.cardThumbnail.setOnClickListener {
             pickImage.launch("image/*")
         }
 
+        //Picking the Video
         binding.cardVideo.setOnClickListener {
             pickVideo.launch("video/*")
         }
@@ -86,8 +102,11 @@ class UploadCourseActivity : AppCompatActivity() {
                 Toast.makeText(this, "Enter the duration", Toast.LENGTH_SHORT).show()
             } else if (price.isEmpty()) {
                 Toast.makeText(this, "Enter the price", Toast.LENGTH_SHORT).show()
-            } else {
-                uploadCourse(title, description, duration, price, imageUri!!, introVideoUri!!)
+            } else if (category.isEmpty()) {
+                Toast.makeText(this, "Choose the Category", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                uploadCourse(title, description, duration, price, imageUri!!, introVideoUri!!,category)
             }
         }
     }
@@ -117,7 +136,8 @@ class UploadCourseActivity : AppCompatActivity() {
         duration: String,
         price: String,
         imageUri: Uri,
-        introVideoUri: Uri
+        introVideoUri: Uri,
+        category:String
     ) {
         loadingDialog.show()
         val childKey = System.currentTimeMillis().toString()
@@ -137,6 +157,7 @@ class UploadCourseActivity : AppCompatActivity() {
                             courseData(
                                 title = title,
                                 description = description,
+                                category = category,
                                 duration = duration,
                                 price = price,
                                 thumbnail = imageUrl.toString(),
@@ -172,7 +193,6 @@ class UploadCourseActivity : AppCompatActivity() {
 }
 
 class FullScreenVideoView(context: Context, attrs: AttributeSet) : VideoView(context, attrs) {
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = View.MeasureSpec.getSize(widthMeasureSpec)
         val height = View.MeasureSpec.getSize(heightMeasureSpec)
